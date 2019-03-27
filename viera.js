@@ -94,6 +94,16 @@
         this.sendRequest('command', 'X_SendKey', '<X_KeyEvent>NRC_' + command.toUpperCase() + '-ONOFF</X_KeyEvent>');
         return this;
     };
+    
+    /**
+     * Send a change HDMI input to the TV
+     *
+     * @param {String} command Command from codes.txt
+     */
+    Viera.prototype.sendHDMICommand = function(command) {
+        this.sendRequest('command', 'X_SendKey', '<X_KeyEvent>NRC_' + command.toUpperCase() + '</X_KeyEvent>');
+        return this;
+    };
 
     /**
      * Get volume from TV
