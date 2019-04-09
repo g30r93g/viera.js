@@ -7,27 +7,27 @@ Node.js library for controlling Panasonic Viera TV.
 
 1. Require the module and create an instance of module:
 
-	```js
-	var Viera = require('./viera');
-	
-	var tv = new Viera('<ip_address>');
-	```
+```js
+  var Viera = require('./viera');
+  
+  var tv = new Viera('<ip_address>');
+```
 
 2. Start sending commands! (commands listed in ``` codes.txt ```)
 
-	```js
-	tv.sendCommand("menu");
-
-	tv.setVolume(20);
-	
-	tv.setMute(true);
-	
+```js
+  tv.sendCommand("menu");
+  
+  tv.setVolume(20);
+  
+  tv.setMute(true);
+  
   tv.getVolume(function(data) {
-    console.log(data);
+      console.log(data);
   });
-  ```
+```
 
-You can also chain multiple methods
+You can also chain multiple methods:
  ```js
   tv.sendCommand("apps")
     .sendCommand("down")
