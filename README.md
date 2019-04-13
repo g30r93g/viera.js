@@ -18,6 +18,8 @@ Node.js library for controlling Panasonic Viera TV.
 ```js
   tv.sendCommand("menu");
   
+  tv.sendHDMICommand(1);
+  
   tv.setVolume(20);
   
   tv.setMute(true);
