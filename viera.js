@@ -100,8 +100,8 @@
      *
      * @param {String} command Command from codes.txt
      */
-    Viera.prototype.sendHDMICommand = function(command) {
-        this.sendRequest('command', 'X_SendKey', '<X_KeyEvent>NRC_' + command.toUpperCase() + '</X_KeyEvent>');
+    Viera.prototype.sendHDMICommand = function(hdmiInput) {
+        this.sendRequest('command', 'X_SendKey', '<X_KeyEvent>NRC_HDMI' + (hdmiInput - 1) + '</X_KeyEvent>');
         return this;
     };
 
