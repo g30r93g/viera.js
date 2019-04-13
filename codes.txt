@@ -52,12 +52,7 @@ P_NR        - P-NR (Noise reduction)
 OFFTIMER    - off timer
 R_TUNE      - Seems to do the same as INFO
 
-hdmi commands
-HDMI1
-HDMI2
-HDMI3
-HDMI4
-... ("HDMI" + inputNum)
+HDMI inputs (use .sendHDMICommand(_:inputNumber)
 
 others (depends on type of your TV)
 CHG_NETWORK
