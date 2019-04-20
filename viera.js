@@ -84,7 +84,65 @@
 
         return this;
     };
+    
+    /**
+     * Send request to open app
+     *
+     * @param {String} appID appId from codes.txt
+     */
+    Viera.prototype.sendAppRequest = function(appID) {
+        var url = '/nrc/control_0';
+        var urn = 'panasonic-com:service:p00NetworkControl:1';
+        
+        var body = '<?xml version="1.0" encoding="utf-8"?> \
+                    <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"> \
+                    <s:Body> \
+                     <u:X_LaunchApp xmlns:u="urn:' + urn + '"> \
+                      <X_AppType> \
+                       vc_app \
+                      <X_AppType> \
+                      <X_LaunchKeyword> \
+                       product_id=' + appID + ' \
+                      </X_LaunchKeyword> \
+                     </u:X_LaunchApp> \
+                    </s:Body> \
+                    </s:Envelope>';
+        
+        var postRequest = {
+            host: this.ipAddress,
+            path: url,
+            port: 55000,
+            method: "POST",
+            headers: {
+                'Content-Length': body.length,
+                'Content-Type': 'text/xml; charset="utf-8"',
+                'SOAPACTION': '"urn:'+urn+'#X_LaunchApp"'
+            }
+        };
 
+        var self = this;
+        if(options !== undefined) {
+            self.callback = options.callback;
+        } else {
+            self.callback = function () {};
+        }
+
+        var req = http.request(postRequest, function(res) {
+            res.setEncoding('utf8');
+            res.on('data', self.callback);
+        });
+
+        req.on('error', function(e) {
+            console.log('error: ' + e.message);
+            console.log(e);
+        });
+
+        req.write(body);
+        req.end();
+
+        return this; 
+    }
+    
     /**
      * Send a command to the TV
      *
@@ -98,10 +156,20 @@
     /**
      * Send a change HDMI input to the TV
      *
-     * @param {String} command Command from codes.txt
+     * @param {String} hdmiInput Command from codes.txt
      */
     Viera.prototype.sendHDMICommand = function(hdmiInput) {
         this.sendRequest('command', 'X_SendKey', '<X_KeyEvent>NRC_HDMI' + (hdmiInput - 1) + '-ONOFF</X_KeyEvent>');
+        return this;
+    };
+    
+    /** 
+     * Send command to open app on the TV
+     * 
+     * @param {String} appID appId from codes.txt
+     */
+    Viera.prototype.sendAppCommand = function(appID) {
+        this.sendAppRequest(appID);
         return this;
     };
 
