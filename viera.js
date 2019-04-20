@@ -101,7 +101,7 @@
      * @param {String} command Command from codes.txt
      */
     Viera.prototype.sendHDMICommand = function(hdmiInput) {
-        this.sendRequest('command', 'X_SendKey', '<X_KeyEvent>NRC_HDMI' + (hdmiInput - 1) + '</X_KeyEvent>');
+        this.sendRequest('command', 'X_SendKey', '<X_KeyEvent>NRC_HDMI' + (hdmiInput - 1) + '-ONOFF</X_KeyEvent>');
         return this;
     };
 
