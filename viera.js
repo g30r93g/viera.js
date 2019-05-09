@@ -1,7 +1,7 @@
-// Viera.js 0.1.4
+// Viera.js 0.2.5
 // (c) 2014 Samuel Matis
 // Viera.js may be freely distributed or modified under the MIT license.
-
+// Modified by g30r93g (George Nick Gorzynski) on 09/05/2019.
 
 (function() {
 
@@ -240,7 +240,7 @@
         this.sendRequest('render', 'SetMute', "<InstanceID>0</InstanceID><Channel>Master</Channel><DesiredMute>" + mute + "</DesiredMute>");
         return this;
     };
-
+    
     // Export the constructor
     module.exports = Viera;
 
