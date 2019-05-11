@@ -1,46 +1,16 @@
-viera.js
-========
+# Viera.js-g30r93g
 
-Node.js library for controlling Panasonic Viera TV, courtesy of Samuel Matis.
-This fork contains HDMI switching command and viera application launching.
+A node.js library to control Panasonic Viera TV's. Created by Samuel Matis and modified by George Nick Gorzynski. Please see license below.
 
-## How to use
 
-1. Require the module and create an instance of module:
+## Why my fork?
+I have included HDMI control and am working on getting apps installed on the TV and power state.
 
-```js
-  var Viera = require('./viera');
-  
-  var tv = new Viera('<ip_address>');
-```
+## Usage Example
 
-2. Start sending commands! (commands listed in ``` codes.txt ```)
-
-```js
-  tv.sendCommand("menu");
-  
-  tv.sendAppRequest("App_ID")
-  
-  tv.setVolume(20);
-  
-  tv.setMute(true);
-  
-  tv.getVolume(function(data) {
-      console.log(data);
-  });
-```
-
-You can also chain multiple methods:
- ```js
-  tv.sendCommand("apps")
-    .sendCommand("down")
-    .sendCommand("enter")
-    .setVolume(25);
-  ```
-
-You can see an example in  ``` example.js ```
 
 ## License
+
 The MIT License (MIT)
 
 Copyright (c) 2014 Samuel Matis
