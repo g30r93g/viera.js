@@ -1,6 +1,6 @@
 {
   "name": "viera.js-g30r93g",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "Node.js library for controlling Panasonic Viera TV, courtesy of Samuel Matis.",
   "author": {
     "name": "Samuel Matis",

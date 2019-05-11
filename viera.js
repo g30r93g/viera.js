@@ -2,6 +2,7 @@
 // (c) 2014 Samuel Matis
 // Viera.js may be freely distributed or modified under the MIT license.
 // Modified by g30r93g (George Nick Gorzynski) on 09/05/2019.
+//
 
 (function() {
 
@@ -16,7 +17,7 @@
         // Check if ipAddress is valid IP address
         var ipRegExp = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/;
 
-        if(ipRegExp.test(ipAddress)) {
+        if (ipRegExp.test(ipAddress)) {
             this.ipAddress = ipAddress;
         } else {
             throw new TypeError('You entered invalid IP address!');
@@ -33,7 +34,7 @@
      */
      Viera.prototype.sendRequest = function(type, action, command, options) {
         var url, urn;
-        if(type === 'command') {
+        if (type === 'command') {
             url = '/nrc/control_0';
             urn = 'panasonic-com:service:p00NetworkControl:1';
         } else if (type === 'render') {
@@ -63,18 +64,18 @@
         };
 
         var self = this;
-        if(options !== undefined) {
+        if (options !== undefined) {
             self.callback = options.callback;
         } else {
             self.callback = function () {};
         }
 
-        var req = http.request(postRequest, function(res) {
+        var req = http.request(postRequest, (res) => {
             res.setEncoding('utf8');
             res.on('data', self.callback);
         });
 
-        req.on('error', function(e) {
+        req.on('error', (e) =>{
             console.log('error: ' + e.message);
             console.log(e);
         });
@@ -84,64 +85,6 @@
 
         return this;
     };
-    
-    /**
-     * Send request to open app
-     *
-     * @param {String} appID appId from codes.txt
-     */
-    Viera.prototype.sendAppRequest = function(appID) {
-        var url = '/nrc/control_0';
-        var urn = 'panasonic-com:service:p00NetworkControl:1';
-        
-        var body = '<?xml version="1.0" encoding="utf-8"?> \
-                    <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/" s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"> \
-                    <s:Body> \
-                     <u:X_LaunchApp xmlns:u="urn:' + urn + '"> \
-                      <X_AppType> \
-                       vc_app \
-                      <X_AppType> \
-                      <X_LaunchKeyword> \
-                       product_id=' + appID + ' \
-                      </X_LaunchKeyword> \
-                     </u:X_LaunchApp> \
-                    </s:Body> \
-                    </s:Envelope>';
-        
-        var postRequest = {
-            host: this.ipAddress,
-            path: url,
-            port: 55000,
-            method: "POST",
-            headers: {
-                'Content-Length': body.length,
-                'Content-Type': 'text/xml; charset="utf-8"',
-                'SOAPACTION': '"urn:'+urn+'#X_LaunchApp"'
-            }
-        };
-
-        var self = this;
-        if(options !== undefined) {
-            self.callback = options.callback;
-        } else {
-            self.callback = function () {};
-        }
-
-        var req = http.request(postRequest, function(res) {
-            res.setEncoding('utf8');
-            res.on('data', self.callback);
-        });
-
-        req.on('error', function(e) {
-            console.log('error: ' + e.message);
-            console.log(e);
-        });
-
-        req.write(body);
-        req.end();
-
-        return this; 
-    }
     
     /**
      * Send a command to the TV
@@ -169,7 +112,7 @@
      * @param {String} appID appId from codes.txt
      */
     Viera.prototype.sendAppCommand = function(appID) {
-        this.sendAppRequest(appID);
+        this.sendRequest('command', 'X_LaunchApp', '<X_AppType>vc_app<X_AppType><X_LaunchKeyword>product_id=' + appID + '</X_LaunchKeyword>')
         return this;
     };
 
@@ -184,9 +127,9 @@
 
         this.sendRequest('render', 'GetVolume', '<InstanceID>0</InstanceID><Channel>Master</Channel>',
         {
-            callback: function(data){
+            callback: function(data) {
                 var match = /<CurrentVolume>(\d*)<\/CurrentVolume>/gm.exec(data);
-                if(match !== null) {
+                if (match !== null) {
                     var volume = match[1];
                     self.volumeCallback(volume);
                 }
@@ -222,7 +165,7 @@
             callback: function(data) {
                 var regex = /<CurrentMute>([0-1])<\/CurrentMute>/gm;
                 var match = regex.exec(data);
-                if(match !== null) {
+                if (match !== null) {
                     var mute = (match[1] === '1');
                     self.muteCallback(mute);
                 }
