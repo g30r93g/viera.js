@@ -7,7 +7,33 @@ A node.js library to control Panasonic Viera TV's. Created by Samuel Matis and m
 I have included HDMI control and am working on getting apps installed on the TV and power state.
 
 ## Usage Example
-
+```js
+  var VieraJS = require("viera.js-g30r93g");
+  var viera = new VieraJS("ipAddress");
+  
+  viera.sendRequest("Command", "X_SendKey", "<X_KeyEvent>NRC_" + command.toUpperCase() + "-ONOFF</X_KeyEvent>");
+  
+  viera.sendCommand("Power");
+  viera.sendCommand("Up");
+  viera.sendCommand("Menu");
+  
+  viera.sendHDMICommand(1);
+  viera.sendHDMICommand(2);
+  
+  viera.sendAppCommand("0010000200000001"); // Netflix
+  viera.sendAppCommand("0010000100170001"); // Amazon Prime Video
+  viera.sendAppCommand("0070000200170001"); // YouTube
+  
+  viera.getMute((status) => {
+    console.log("Mute: " + status);
+  });
+  viera.getVolume((volume) => {
+    console.log("Volume: " + volume);
+  });
+  
+  viera.setMute(true);
+  viera.setVolume(30);
+```
 
 ## License
 
