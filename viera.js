@@ -20,7 +20,7 @@
         if (ipRegExp.test(ipAddress)) {
             this.ipAddress = ipAddress;
         } else {
-            throw new TypeError('You entered invalid IP address!');
+            throw new TypeError('[viera.js] You entered an invalid IP address');
         }
     };
 
@@ -78,6 +78,7 @@
         req.on('error', (e) =>{
             console.log('error: ' + e.message);
             console.log(e);
+//             self.callback(e, null);
         });
 
         req.write(body);
